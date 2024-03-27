@@ -1,0 +1,15 @@
+{
+  "name": "TipBot-Contracts",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.4",
+    "hardhat": "^2.20.1"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "4.9.3",
+    "@openzeppelin/contracts-upgradeable": "4.9.3",
+    "dotenv": "^16.4.5",
+    "ethers": "^6.11.1",
+    "hardhat-upgrades": "^0.0.0"
+  }
+}
