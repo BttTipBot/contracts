@@ -5,11 +5,14 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/extensions/ERC20BurnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract TipBot is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, OwnableUpgradeable {
     // address public owner;
 
     mapping(address => uint256) public depositedBalances;
+    mapping(address => mapping(address => uint256)) public depositedBalancesERC20;
+
     address topUpAddress;
     uint256 fee; // Fee percentage (e.g., 5 for 5%)
     uint256 feeAmount; // Fee amount
@@ -68,6 +71,16 @@ contract TipBot is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Ow
 
         payable(to).transfer(netAmount); // Transfer net amount to the recipient
 
+        emit Tip(msg.sender, to, netAmount, feeAmount);
+    }
+
+    function tipERC20(address tokenAddress, address to, uint256 amount) external {
+        require(depositedBalances[msg.sender] >= amount, "Insufficient balance");
+        uint256 feeAmount = (amount * fee) / 100;
+        uint256 netAmount = amount - feeAmount;
+        depositedBalances[msg.sender] -= amount;
+        IERC20 token = IERC20(tokenAddress);
+        require(token.transfer(to, netAmount), "Token transfer failed");
         emit Tip(msg.sender, to, netAmount, feeAmount);
     }
 
