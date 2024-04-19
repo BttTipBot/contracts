@@ -41,14 +41,16 @@ contract TipBot is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, Ow
         require(amount > 0 && amount <= depositedBalances[msg.sender], "Invalid withdraw amount");
         depositedBalances[msg.sender] -= amount;
 
-        payable(msg.sender).transfer(amount); // Transfer accumulated fee to the owner
+        _burn(msg.sender, amount);
+
+        payable(msg.sender).transfer(amount); 
         emit Withdraw(msg.sender, amount);
     }
 
     function withdrawFee(address _to) external onlyOwner {
         require(feeAmount > 0, "No fee balance to withdraw");
 
-        payable(_to).transfer(feeAmount); // Transfer accumulated fee to the owner
+        payable(_to).transfer(feeAmount); 
         emit WithdrawFee(_to, feeAmount);
     }
 
