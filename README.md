@@ -1,6 +1,6 @@
 # Compile
 ```shell
-npx hardhat compile
+npx hardhat compile --force
 ```
 
 # Deploy the code
@@ -27,5 +27,5 @@ npx hardhat run --network bttc .\scripts\upgrade.ts
 # Publish and verify
 ```shell
 npx hardhat verify --network bttcTestnet 0xa5019Fe2B0AF5EC39d1Eb6A23B44CcA8e3d889F5
-npx hardhat verify --network bttc 0x0de9fcc4532626bacbea5edba22cdcb750fbbfb3
+npx hardhat verify --network bttc 0x9F05ff7dcF4b8d73b32eEBd7DE1D9C8F19cEd24d
 ```
